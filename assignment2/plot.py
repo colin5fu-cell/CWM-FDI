@@ -4,17 +4,18 @@ import matplotlib.pyplot as plt
 
 
 # parameters to modify 
-filename="my_input.txt"
-label='label'
-xlabel = 'xlabel'
-ylabel = 'ylabel'
-title='Simple plot'
-fig_name='my_graph.png'
+filename="time_c.txt"
+label='c'
+xlabel = 'number of samples'
+ylabel = 'time in ns'
+title='CPU consecutive reads'
+fig_name='CPU_reads_c.png'
 bins=100 #adjust the number of bins to your plot
 
 ## load data from input file
-t = np.loadtxt(filename, delimiter=" ", dtype="float")
-
+t = np.loadtxt(filename, delimiter=" ", dtype="float")[0:500]
+print(np.average(t))
+print(np.max(t))
 ## if your data is "X Y" (2 cols), use the following line
 #plt.plot(t[:,0], t[:,1], label=label)  # Plot some data on the (implicit) axes.
 
@@ -34,5 +35,5 @@ plt.xlabel(xlabel)
 plt.ylabel(ylabel)
 plt.title(title)
 plt.legend()
-plt.savefig(fig_name)
+#plt.savefig(fig_name)
 plt.show()
