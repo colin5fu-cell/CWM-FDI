@@ -14,7 +14,6 @@
  *     Current TSC value in CPU cycles.
  */
 static inline uint64_t read_tsc(void) {
-    _mm_lfence();
     uint64_t t = __rdtsc();
     _mm_lfence();
     return t;
@@ -212,7 +211,7 @@ int main(int argc, char **argv) {
         ? (size_t)strtoull(argv[1], NULL, 10)
         : 2;
 
-    const char *filename = (argc > 1) ? "time_c.txt" : NULL;
+    const char *filename = (argc > 1) ? "time_c_final.txt" : NULL;
 
     double cpu_freq_ghz = read_cpu_freq_ghz();
 

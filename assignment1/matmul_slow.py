@@ -8,6 +8,7 @@ so the computation has an observable result.
 
 import sys
 from typing import List
+import time
 
 Matrix = List[List[float]]
 
@@ -28,17 +29,17 @@ def zero_matrix(n: int) -> Matrix:
 # Intentionally simple O(n^3) matrix multiplication.
 # This loop order is correct but cache-unfriendly for matrix B.
 def matmul_slow(a: Matrix, b: Matrix, c: Matrix, n: int) -> None:
-	for i in range(n):
-          row_ai = a[i]
-          row_ci = c[i]
-          for j in range(n):
-            row_ci[j] = 0.0
+    for i in range(n):
+        for j in range(n):
+            start_cell = time.perf_counter()
+            total = 0.0
             for k in range(n):
-              aik = row_ai[k]
-              row_bk = b[k]
-          for j in range(n):
-            row_ci[j] += aik * row_bk[j]
+                total += a[i][k] * b[k][j]
+            end_cell = time.perf_counter()
+            c[i][j] = total
 
+            if i == 0 and j == 0:
+                print(f"Cell (0,0) time: {(end_cell-start_cell)*1e6:.3f} us")
 
 
 def checksum(m: Matrix, n: int) -> float:
@@ -83,10 +84,12 @@ def main(argv: list[str]) -> int:
     b = init_matrix(n, 2.0)
 
     c = zero_matrix(n)
-
+    start = time.perf_counter()
     for _ in range(reps):
         matmul_slow(a, b, c, n)
-
+    end = time.perf_counter()
+    elapsed_time = end - start
+    print("time taken by matmul_slow is", elapsed_time, " s")
     print(f"n={n} reps={reps} checksum={checksum(c, n):.6f}")
     return 0
 
