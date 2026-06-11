@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-INPUT="${1:-out.perf}"
-OUTPUT="${2:-flamegraph.svg}"
+INPUT="${1:-out_fast1.perf}"
+OUTPUT="${2:-flamegraph_fast1.svg}"
 
 if [[ ! -f "$INPUT" ]]; then
   echo "Error: input file '$INPUT' not found." >&2
