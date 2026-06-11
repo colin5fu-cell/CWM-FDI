@@ -109,7 +109,10 @@ int main(int argc, char* argv[])
    // append_address(evil_str, address_start_byte, function_addr);
     append_address(evil_str,0,0xdeadbeef);
     hexdump_arr(evil_str);   // Uncomment for debug
-    printf("Buffer Ptr: 0x%lx\n", evil_str);
+    printf("Buffer Ptr for 0 offset: 0x%lx\n", &evil_str[0]);
+    printf("Buffer Ptr for 1 offset: 0x%lx\n", &evil_str[1]);
+    printf("Buffer Ptr for 2 offset: 0x%lx\n", &evil_str[2]);
+    printf("Buffer Ptr for 3 offset: 0x%lx\n", &evil_str[3]);
 
     // Call the victim with normal input
     victim("0123456789ABCDE"); // Normal input of expected length == 16. No issues here
