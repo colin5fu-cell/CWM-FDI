@@ -1,4 +1,5 @@
 import subprocess
+import ast
 """script that launches four models, measures their energy consumption and justifies the best model by calculating a combined metric""" 
 
 model1_result = subprocess.run(["python3", "logistic_new.py"], capture_output = True, text = True)
@@ -46,7 +47,49 @@ max_eng = max(energy)
 min_eng = min(energy)
 nor_eng = [0]*4
 
-for i in nor_eng:
-    nor_eng[i] = energy[i]/(max_eng - min_eng)
+for i in range(len(nor_eng)):
+    nor_eng[i] = 1 - (energy[i]-min_eng)/(max_eng - min_eng)
 
-#calculates
+
+#calculates the normalised f1 score
+f1 = [ast.literal_eval(model1_result.stdout)["weighted avg"]["f1-score"], ast.literal_eval(model2_result.stdout)["weighted avg"]["f1-score"], ast.literal_eval(model3_result.stdout)["weighted avg"]["f1-score"], ast.literal_eval(model4_result.stdout)["weighted avg"]["f1-score"]]
+max_f1 = max(f1)
+min_f1 = min(f1)
+nor_f1 = [0] * len(f1)
+
+for i in range(len(f1)):
+    nor_f1 = (f1[i] - min_f1)/(max_f1-min_f1)
+
+recall1 = [
+    ast.literal_eval(model1_result.stdout)["1.0"]["recall"],
+    ast.literal_eval(model2_result.stdout)["1.0"]["recall"],
+    ast.literal_eval(model3_result.stdout)["1.0"]["recall"],
+    ast.literal_eval(model4_result.stdout)["1.0"]["recall"]
+]
+
+max_recall = max(recall1)
+min_recall = min(recall1)
+
+nor_recall = [0] * len(recall1)
+
+for i in range(len(nor_recall)):
+    nor_recall[i] = (nor_recall[i] - min_recall) / (max_recall - min_recall)
+
+models = ["Logistic Regression", "Random Forest","Gradient Boosting", "SGD"]
+
+metric = [
+    0.25 * nor_recall[i]
+    + 0.25 * nor_f1[i]
+    + 0.5 * energy_score[i]
+    for i in range(4)
+]
+
+for i in range(len(models)):
+    print(
+        f"{models[i]}: "
+        f"Recall={nor_recall[i]:.4f}, "
+        f"F1={nor_f1[i]:.4f}, "
+        f"Energy={energy_score[i]:.4f}, "
+        f"Metric={metric[i]:.4f}"
+    )
+
