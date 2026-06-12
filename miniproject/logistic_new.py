@@ -28,6 +28,6 @@ model.fit(x_train, y_train)
 
 y_predicted = model.predict(x_test)
 
-report = classification_report(y_test, y_predicted)
+report = classification_report(y_test, y_predicted, output_dict = True)
 
 print(report)
