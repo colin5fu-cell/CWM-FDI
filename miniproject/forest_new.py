@@ -4,6 +4,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
+"""script that reads data and runs the random forest classifier"""
+
 data = pd.read_csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 
 x = data.drop("Diabetes_binary", axis=1)

@@ -5,6 +5,8 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 
+"""script that reads data and runs the histogram based gradient boosting classifier"""
+
 data = pd.read_csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 
 x = data.drop("Diabetes_binary", axis=1)

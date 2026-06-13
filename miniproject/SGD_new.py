@@ -4,6 +4,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import classification_report
 
+"""script that reads data and runs the SGD classifier"""
+
 data = pd.read_csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 
 x = data.drop("Diabetes_binary", axis=1)

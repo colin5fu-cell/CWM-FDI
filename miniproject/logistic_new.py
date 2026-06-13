@@ -6,6 +6,7 @@ from sklearn.metrics import classification_report
 from sklearn.compose import ColumnTransformer
 import subprocess
 
+"""script that reads data and runs the logistic regression model"""
 
 data = pd.read_csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 
