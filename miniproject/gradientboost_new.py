@@ -21,7 +21,7 @@ scaler = StandardScaler()
 x_train[continuous] = scaler.fit_transform(x_train[continuous])
 x_test[continuous] = scaler.transform(x_test[continuous])
 
-model = HistGradientBoostingClassifier(class_weight = 'balanced')
+model = HistGradientBoostingClassifier(class_weight = 'balanced', random_state = 1)
 
 model.fit(x_train, y_train)
 
