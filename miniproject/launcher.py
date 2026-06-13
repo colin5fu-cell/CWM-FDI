@@ -63,6 +63,7 @@ nor_f1 = [0] * len(f1)
 for i in range(len(f1)):
     nor_f1[i] = (f1[i] - min_f1)/(max_f1-min_f1)
 
+#calculates the normalized recall
 recall1 = [
     ast.literal_eval(model1_result.stdout)["1.0"]["recall"],
     ast.literal_eval(model2_result.stdout)["1.0"]["recall"],
@@ -80,6 +81,7 @@ for i in range(len(nor_recall)):
 
 models = ["Logistic Regression", "Random Forest","Gradient Boosting", "SGD"]
 
+#calculates and prints out metric for each model
 metric = [
     0.25 * nor_recall[i]
     + 0.25 * nor_f1[i]
